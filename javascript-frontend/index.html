@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz application</title>
+    <link href="./dist/compiled.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+<nav class="w-full bg-orange-600 p-3 flex justify-between">
+    <a class="h-full text-white font-semibold text-lg">Quiz application</a>
+    <div class="flex gap-4 text-white font-large text-lg hidden" id="stats">
+        <div>
+            <a>Points: <span id="points">0</span></a>
+        </div>
+        <div>
+            <a id="student_name">Student: x</a>
+        </div>
+    </div>
+</nav>
+<section id="home" class="m-5">
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 space-y-2">
+            <h1 class="w-full text-2xl font-bold text-center"> Welcome to my quiz!</h1>
+            <p class="w-full text-center text-gray-600 text-sm">
+                Welcome to the quiz I made in my first year of computer sience! In my junior (thirth) year I rewrote
+                most of the frontend so it's responsive. I also added my backend for the independend study I did.
+                Proving I know how to prevent SQL injection, XSS and XCSRF attacks.
+            </p>
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center">
+                    <span class="bg-white px-2 text-sm text-gray-500"></span>
+                </div>
+            </div>
+            <div>
+                <p class="w-full text-center text-gray-600 text-sm">
+                    To get started, enter your name below and click on the big orange button!
+                </p>
+            </div>
+            <div>
+                <div class="flex mt-1 justify-center">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mt-1">What's your name?</label>
+                    <span class="text-red-600 ml-0.5">*</span>
+                </div>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <input type="text" name="name" id="name_input" autocomplete="name"
+                           class="block w-full pr-10 border-gray-300 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm rounded-md">
+                </div>
+            </div>
+            <button type="submit" id="start_quiz_button"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                Start the quiz!
+            </button>
+        </div>
+    </div>
+</section>
+<section id="quiz" class="hidden m-5">
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-3xl">
+        <div class="bg-white py-4 px-4 shadow sm:rounded-lg sm:px-10 space-y-2">
+            <nav class="flex items-center justify-center" aria-label="Progress">
+                <p class="text-sm font-medium">Question <span id="current_question_number">1</span> of 10</p>
+                <ol role="list" class="ml-8 flex items-center space-x-5">
+
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-orange-600 hover:bg-orange-900"></a></li>
+
+                    <li>
+                        <!-- Current Step -->
+                        <a href="#" class="relative flex items-center justify-center" aria-current="step">
+                            <span class="absolute flex h-5 w-5 p-px" aria-hidden="true">
+                                <span class="h-full w-full rounded-full bg-orange-200"></span>
+                            </span>
+                            <span class="relative block h-2.5 w-2.5 rounded-full bg-orange-600" aria-hidden="true"></span>
+                        </a>
+                    </li>
+
+
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+
+
+
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 space-y-2">
+            Hello 2!
+        </div>
+    </div>
+</section>
+
+<script src="./js/main.js"></script>
+
+</body>
+</html>
