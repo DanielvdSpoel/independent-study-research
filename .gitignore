@@ -1,3 +1,5 @@
-.idea
-javascript-frontend/node_modules
-express-js-backend/node_modules
+/node_modules
+.env
+.env.backup
+/.idea
+/.vscode

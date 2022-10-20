@@ -1,3 +1,10 @@
+const http = new XMLHttpRequest()
+http.open('GET','http://localhost:8080/questions')
+http.send()
+
+http.onreadystatechange = (e) => {
+    console.log(http.responseText)
+}
 //Submitting the name and starting the quiz
 const startQuizButton = document.getElementById('start_quiz_button');
 
