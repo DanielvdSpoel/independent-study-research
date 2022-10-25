@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .answer-btn-answered {
+        @apply bg-white text-orange-600
+    }
+    .answer-box-wrong {
+        @apply bg-red-600 text-white hover:bg-red-600
+    }
+    .answer-box-wrong {
+        @apply bg-green-600 text-white hover:bg-green-600
+    }
+}

@@ -17,13 +17,13 @@
         </div>
     </div>
 </nav>
-<section id="home" class="m-5">
+<section id="home" class="m-5 ">
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 space-y-2">
             <h1 class="w-full text-2xl font-bold text-center"> Welcome to my quiz!</h1>
             <p class="w-full text-center text-gray-600 text-sm">
                 Welcome to the quiz I made in my first year of computer sience! In my junior (thirth) year I rewrote
-                most of the frontend so it's responsive. I also added my backend for the independend study I did.
+                most of the frontend, so it's responsive. I also added my backend for the independend study I did.
                 Proving I know how to prevent SQL injection, XSS and XCSRF attacks.
             </p>
             <div class="relative">
@@ -41,7 +41,7 @@
             </div>
             <div>
                 <div class="flex mt-1 justify-center">
-                    <label for="name" class="block text-sm font-medium text-gray-700 mt-1">What's your name?</label>
+                    <label for="name_input" class="block text-sm font-medium text-gray-700 mt-1">What's your name?</label>
                     <span class="text-red-600 ml-0.5">*</span>
                 </div>
                 <div class="mt-1 relative rounded-md shadow-sm">
@@ -56,45 +56,81 @@
         </div>
     </div>
 </section>
-<section id="quiz" class="hidden m-5">
+<section id="quiz" class="m-5 hidden">
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-3xl">
         <div class="bg-white py-4 px-4 shadow sm:rounded-lg sm:px-10 space-y-2">
             <nav class="flex items-center justify-center" aria-label="Progress">
                 <p class="text-sm font-medium">Question <span id="current_question_number">1</span> of 10</p>
                 <ol role="list" class="ml-8 flex items-center space-x-5">
 
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-orange-600 hover:bg-orange-900"></a></li>
-
-                    <li>
-                        <!-- Current Step -->
+                    <li id="status-ball-0">
                         <a href="#" class="relative flex items-center justify-center" aria-current="step">
                             <span class="absolute flex h-5 w-5 p-px" aria-hidden="true">
-                                <span class="h-full w-full rounded-full bg-orange-200"></span>
+                                <span class="h-full w-full rounded-full animate-ping bg-orange-200"></span>
                             </span>
                             <span class="relative block h-2.5 w-2.5 rounded-full bg-orange-600" aria-hidden="true"></span>
                         </a>
                     </li>
-
-
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
-                    <li><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
-
-
-
+                    <li id="status-ball-1"><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li id="status-ball-2"><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li id="status-ball-3"><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li id="status-ball-4"><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li id="status-ball-5"><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li id="status-ball-6"><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li id="status-ball-7"><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li id="status-ball-8"><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
+                    <li id="status-ball-9"><a href="#" class="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"></a></li>
                 </ol>
             </nav>
         </div>
     </div>
+
+    <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-3xl">
+        <div class="bg-white py-4 px-4 shadow rounded-lg sm:px-10 space-y-2">
+            <h1 id="question-text" class="font-medium text-lg w-full text-center">Placeholder text, if you see this something went wrong!</h1>
+        </div>
+    </div>
+
+
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-3xl grid grid-cols-2 gap-4">
+        <div id="answer-a" class="bg-white py-8 px-4 shadow rounded-lg sm:px-10 space-x-3 flex hover:bg-gray-50 aria-incorrect:bg-red-600 aria-incorrect:text-white aria-incorrect:hover:none aria-correct:bg-green-600 aria-correct:text-white aria-correct:hover:none">
+            <button id="answer-a-button" type="button" class="inline-flex items-center font-semibold rounded-full border border-transparent bg-orange-600 py-1 px-3 text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                <p>A</p>
+            </button>
+            <p id="answer-a-text" class="h-full text-md align-middle mt-1">Placeholder text, if you see this something went wrong!</p>
+        </div>
+        <div id="answer-b" class="bg-white py-8 px-4 shadow rounded-lg sm:px-10 space-x-3 flex hover:bg-gray-50 aria-incorrect:bg-red-600 aria-incorrect:text-white aria-incorrect:hover:none aria-correct:bg-green-600 aria-correct:text-white aria-correct:hover:none">
+            <button type="button" id="answer-b-button" class="inline-flex items-center font-semibold rounded-full border border-transparent bg-orange-600 py-1 px-3 text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                <p>B</p>
+            </button>
+            <p id="answer-b-text" class="h-full text-md align-middle mt-1">Placeholder text, if you see this something went wrong!</p>
+        </div>
+        <div id="answer-c"  class="bg-white py-8 px-4 shadow rounded-lg sm:px-10 space-x-3 flex hover:bg-gray-50 aria-incorrect:bg-red-600 aria-incorrect:text-white aria-incorrect:hover:none aria-correct:bg-green-600 aria-correct:text-white aria-correct:hover:none">
+            <button type="button" id="answer-c-button" class="inline-flex items-center font-semibold rounded-full border border-transparent bg-orange-600 py-1 px-3 text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                <p>C</p>
+            </button>
+            <p id="answer-c-text" class="h-full text-md align-middle mt-1">Placeholder text, if you see this something went wrong!</p>
+        </div>
+        <div id="answer-d" class="bg-white py-8 px-4 shadow rounded-lg sm:px-10 space-x-3 flex hover:bg-gray-50 aria-incorrect:bg-red-600 aria-incorrect:text-white aria-incorrect:hover:none aria-correct:bg-green-600 aria-correct:text-white aria-correct:hover:none">
+            <button type="button" id="answer-d-button" class="inline-flex items-center font-semibold rounded-full border border-transparent bg-orange-600 py-1 px-3 text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                <p>D</p>
+            </button>
+            <p id="answer-d-text" class="h-full text-md align-middle mt-1">Placeholder text, if you see this something went wrong!</p>
+        </div>
+    </div>
+</section>
+<section id="ending" class="m-5 hidden">
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 space-y-2">
-            Hello 2!
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 space-y-4">
+            <h1 class="w-full text-2xl font-bold text-center">Thanks for playing my quiz!</h1>
+            <p class="w-full text-center text-gray-600 text-sm">
+                I appriciate that you took time to complete my quiz! Your score and time is submitted to the high score board. The top ten scores are visible on the homescreen. Feel free to play again to improve your score!
+            </p>
+            <button type="submit" id="restart_button"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                Play again!
+            </button>
         </div>
     </div>
 </section>
