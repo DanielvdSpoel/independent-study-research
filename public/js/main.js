@@ -6,6 +6,19 @@ const http = new XMLHttpRequest()
 http.open('GET', 'http://localhost:8080/questions')
 http.send()
 
+const post = new XMLHttpRequest()
+post.open('post', 'http://localhost:8080/high-scores')
+post.send({
+    "test": "derp"
+})
+
+
+post.onreadystatechange = (e) => {
+    const response = JSON.parse(post.responseText)
+    console.log(response)
+}
+
+
 http.onreadystatechange = (e) => {
     questions = JSON.parse(http.responseText)
 }
