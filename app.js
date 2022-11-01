@@ -30,10 +30,47 @@ app.get('/questions', async (req, res) => {
     })
 })
 
-/*app.post('/high-scores', async (req, res) => {
-    console.log(req)
-    res.json(req.body)
-})*/
+app.get('/high-scores', async (req, res) => {
+    sqlite.open({
+        filename: './data.sqlite',
+        driver: sqlite3.Database
+    }).then(async (db) => {
+        const result = await db.all(`SELECT * FROM scores ORDER BY score DESC, time LIMIT 20`)
+        res.json(result)
+    })
+})
+
+app.post('/high-scores', async (req, res) => {
+    sqlite.open({
+        filename: './data.sqlite',
+        driver: sqlite3.Database
+    }).then(async (db) => {
+        const player = req.body.player
+        const score = parseInt(req.body.score)
+        const time = parseInt(req.body.time)
+        try {
+            /**
+             * We use a prepared statement to make sure we aren't vulnerable to SQL injection
+             * @type {ISqlite.RunResult<sqlite3.Statement>}
+             */
+            const result = await db.run(
+                'INSERT INTO scores (player, score, time) VALUES (?, ?, ?)', player, score, time
+            )
+            res.status(401);
+            return res.json({
+                "message": "Success!"
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(400);
+            res.json({
+                "message": "Your request is incorrect!"
+            })
+        }
+
+    })
+
+})
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
