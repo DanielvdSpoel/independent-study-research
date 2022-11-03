@@ -47,8 +47,8 @@ startQuizButton.addEventListener("click", function () {
     document.getElementById('quiz').style.display = 'block'
     document.getElementById('scores').style.display = 'none'
     startedAt = new Date().getTime();
+
     nextQuestion()
-    //finishQuiz()
 });
 
 function nextQuestion() {
@@ -141,13 +141,16 @@ function finishQuiz() {
     document.getElementById('ending').style.display = 'block'
     document.getElementById('scores').style.display = 'block'
 
+    const CSRFToken = document.querySelector('meta[name="csrf-token"]').content
+
     const submitScore = new XMLHttpRequest()
-    submitScore.setRequestHeader('Content-Type', 'application/json')
     submitScore.open('post', 'http://localhost:8080/high-scores')
+    submitScore.setRequestHeader('Content-Type', 'application/json')
     submitScore.send(JSON.stringify({
         "time": new Date().getTime() - startedAt,
         "score": pointsAmount,
         "player": playerName,
+        "csrf": CSRFToken
     }));
     submitScore.onreadystatechange = (e) => {
         const response = JSON.parse(submitScore.responseText)

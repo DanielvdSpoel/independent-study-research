@@ -4,6 +4,10 @@ const sqlite = require('sqlite')
 const bodyParser = require('body-parser');
 const multer = require('multer');
 
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
+const { randomBytes } = require('crypto');
+
 const app = express()
 const port = 8080
 const upload = multer();
@@ -12,6 +16,34 @@ app.use(express.static('public'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
+app.use(cookieParser());
+
+//todo if we plan to deploy this to a production env, we should propably put the secret in an env variable
+app.use(cookieSession({
+    name: 'session',                              // name of the cookie
+    secret: '43VzTKgvAPTeDNYeyTt4N%6xM2GDecvWDoqjXTQ!Jt@hPZT*wRr*wXceo6YJmnKJDwHuYz8ouafpGbQpE$Z855kvi#aZ!UrC2',            // key to encode session
+    maxAge: 24 * 60 * 60 * 1000,                  // cookie's lifespan
+    sameSite: 'lax',                              // controls when cookies are sent
+    path: '/',                                    // explicitly set this for security purposes
+    secure: process.env.NODE_ENV === 'production',// cookie only sent on HTTPS
+    httpOnly: true                                // cookie is not available to JavaScript (client)
+}));
+
+app.set('view engine', 'ejs');
+
+app.get('/', function(req, res) {
+
+    /**
+     * CSRF vulnerability #1
+     * We give the frontend a token to make state-changing requests with, this is so the requests always has to be submitted using our website
+     */
+    if (req.session.csrf === undefined) {
+        req.session.csrf = randomBytes(100).toString('base64'); // convert random data to a string
+    }
+    res.render('home', {
+        'token': req.session.csrf
+    });
+});
 
 
 app.get('/questions', async (req, res) => {
@@ -41,6 +73,14 @@ app.get('/high-scores', async (req, res) => {
 })
 
 app.post('/high-scores', async (req, res) => {
+    if (!req.body.csrf || req.body.csrf !== req.session.csrf) {
+        res.status(401);
+        res.json({
+            "message": "CSRF token mismatch, please refresh the page!"
+        })
+        return;
+    }
+
     sqlite.open({
         filename: './data.sqlite',
         driver: sqlite3.Database
@@ -56,7 +96,7 @@ app.post('/high-scores', async (req, res) => {
             const result = await db.run(
                 'INSERT INTO scores (player, score, time) VALUES (?, ?, ?)', player, score, time
             )
-            res.status(401);
+            res.status(201);
             return res.json({
                 "message": "Success!"
             })
