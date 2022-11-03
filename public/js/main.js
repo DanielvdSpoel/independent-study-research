@@ -2,21 +2,14 @@ let questions = []
 let currentQuestion = -1
 let pointsAmount = 0
 let answerCooldownEnabled = false
+let scores = {}
+let startedAt = null
+let playerName = null
 const http = new XMLHttpRequest()
 http.open('GET', 'http://localhost:8080/questions')
 http.send()
 
-const post = new XMLHttpRequest()
-post.open('post', 'http://localhost:8080/high-scores')
-post.send({
-    "test": "derp"
-})
-
-
-post.onreadystatechange = (e) => {
-    const response = JSON.parse(post.responseText)
-    console.log(response)
-}
+refreshScores()
 
 
 http.onreadystatechange = (e) => {
@@ -40,7 +33,7 @@ document.getElementById('answer-d').addEventListener("click", function () {
 //Submitting the name and starting the quiz
 const startQuizButton = document.getElementById('start_quiz_button');
 startQuizButton.addEventListener("click", function () {
-    const playerName = document.getElementById('name_input').value
+    playerName = document.getElementById('name_input').value
 
     /**
      * XSS vulnerability #1
@@ -52,8 +45,10 @@ startQuizButton.addEventListener("click", function () {
     document.getElementById('home').style.display = 'none'
     document.getElementById('stats').style.display = 'flex'
     document.getElementById('quiz').style.display = 'block'
-    //nextQuestion()
-    finishQuiz()
+    document.getElementById('scores').style.display = 'none'
+    startedAt = new Date().getTime();
+    nextQuestion()
+    //finishQuiz()
 });
 
 function nextQuestion() {
@@ -118,14 +113,46 @@ function submitAnswer(letter) {
 
             nextQuestion()
             answerCooldownEnabled = false
-        }, 500)
+        }, 1500)
     }
+}
+
+function refreshScores() {
+    const http = new XMLHttpRequest()
+    http.open('GET', 'http://localhost:8080/high-scores')
+    http.send()
+
+    http.onreadystatechange = (e) => {
+        scores = JSON.parse(http.responseText)
+        let number = 1
+        const element = document.getElementById("leaderboard")
+        element.innerHTML = ''
+        for (const score in scores) {
+            const scoreObject = scores[score]
+            element.innerHTML += `<div  class="flex justify-center space-x-3"> <button type="button" class="inline-flex items-center font-semibold rounded-full border border-transparent bg-orange-600 py-1 px-3 text-white shadow-sm"> <p> ${number} </p> </button> <a class="text-gray-600 text-sm mt-1.5">${scoreObject['player']} (${scoreObject['score']} points in ${parseInt(scoreObject['time']) / 1000} seconds)</a> </div>`
+            number++
+        }
+    }
+
 }
 
 function finishQuiz() {
     document.getElementById('quiz').style.display = 'none'
     document.getElementById('ending').style.display = 'block'
+    document.getElementById('scores').style.display = 'block'
 
-
+    const submitScore = new XMLHttpRequest()
+    submitScore.setRequestHeader('Content-Type', 'application/json')
+    submitScore.open('post', 'http://localhost:8080/high-scores')
+    submitScore.send(JSON.stringify({
+        "time": new Date().getTime() - startedAt,
+        "score": pointsAmount,
+        "player": playerName,
+    }));
+    submitScore.onreadystatechange = (e) => {
+        const response = JSON.parse(submitScore.responseText)
+        console.log(response)
+        refreshScores()
+    }
     console.log("Finished")
 }
