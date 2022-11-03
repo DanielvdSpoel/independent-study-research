@@ -12,16 +12,18 @@ const app = express()
 const port = 8080
 const upload = multer();
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 app.use(express.static('public'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
 app.use(cookieParser());
 
-//todo if we plan to deploy this to a production env, we should propably put the secret in an env variable
 app.use(cookieSession({
     name: 'session',                              // name of the cookie
-    secret: '43VzTKgvAPTeDNYeyTt4N%6xM2GDecvWDoqjXTQ!Jt@hPZT*wRr*wXceo6YJmnKJDwHuYz8ouafpGbQpE$Z855kvi#aZ!UrC2',            // key to encode session
+    secret: process.env.COOKIE_SECRET,            // key to encode session
     maxAge: 24 * 60 * 60 * 1000,                  // cookie's lifespan
     sameSite: 'lax',                              // controls when cookies are sent
     path: '/',                                    // explicitly set this for security purposes
